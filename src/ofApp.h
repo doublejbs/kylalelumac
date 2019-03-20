@@ -115,8 +115,11 @@ public:
     float originX, originY, topRightX, topRightY, bottomLeftX, bottomLeftY, printMouse;
     float screenLengthX, screenLengthY;
     float displayLengthX, displayLengthY;
-
+    ofFile file;
+    ofJson emptyData;
     
+    int tempJsonIndexIndex;
+    array<int, 10> tempJsonIndex;
     
     
     
