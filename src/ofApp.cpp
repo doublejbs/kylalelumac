@@ -12,10 +12,8 @@ void ofApp::setup() {
     printMouse = false;
     setupOrigin = false;
     setupLength = false;
-    
     screenLengthX = 500;
     screenLengthY = 300;
-    
     displayLengthX = 1600;
     displayLengthY = 900;
     
@@ -25,18 +23,14 @@ void ofApp::setup() {
     // enable depth->video image calibration
     kinect.setRegistration(true);
     //kinect.enableDepthNearValueWhite(false);
-    
     kinect.init();
     //kinect.init(true); // shows infrared instead of RGB video image
     //kinect.init(false, false); // disable video image (faster fps)
-    
     kinect.open();        // opens first available kinect
     //kinect.open(1);    // open a kinect by id, starting with 0 (sorted by serial # lexicographically))
     //kinect.open("A00362A08602047A");    // open a kinect using it's unique serial #
     angle = 0;
     kinect.setCameraTiltAngle(angle);
-    
-    
     grayImage.allocate(kinect.width, kinect.height);
     colorImg.allocate(kinect.width, kinect.height);
     redImg.allocate(kinect.width, kinect.height);
@@ -51,13 +45,10 @@ void ofApp::setup() {
         ofLogNotice() << "zero plane pixel size: " << kinect.getZeroPlanePixelSize() << "mm";
         ofLogNotice() << "zero plane dist: " << kinect.getZeroPlaneDistance() << "mm";
     }  ;
-    
-    
-    
+ 
     road.load("images/road.png");
     vid.load("viedos/video.mov");
     plane.load("images/plane.png");
-    
     
     gui.setup();
     gui.add(threshold.set("Threshold", 30, 0, 255));
@@ -67,44 +58,27 @@ void ofApp::setup() {
     gui.add(nearThresholdSlider.set("Near Threshold", 127, 0, 355));
     
     targetColorIx = 0;
-    
-    
-    
-    
     connectIx[0] = ofVec2f(0,1);
     connectIx[1] = ofVec2f(1,2);
-    
-    
     nearThreshold = 130;
     farThreshold = 60;
     
     for (int i=0; i<10; i++) {
-        
         contourSizeBool[i] = false;
     }
-    
     for (int i=0; i<10; i++) {
         contourSizes[i] = 0;
     }
-    
-    
-    
-    
-    
-   
 }
 
 void ofApp::update() {
-    
-    
-    
-    
     nearThreshold = nearThresholdSlider;
     farThreshold = farThresholdSlider;
     
     if (setupOrigin || setupTopRight || setupBottomLeft) return;
 	
     kinect.update();
+	
     if(kinect.isFrameNew()) {
         for (int i=0; i<targetColorIx; i++) {
             contourFinders[i].setMinAreaRadius(5);
